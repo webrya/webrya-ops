@@ -20,10 +20,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6 font-sans">
-      <div className="max-w-md w-full space-y-8 bg-zinc-950 p-10 rounded-[3rem] border border-zinc-900 shadow-2xl">
+    // Προσθήκη overflow-y-auto και h-screen για να εξασφαλίσουμε το scroll αν χρειαστεί
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 font-sans text-white overflow-y-auto py-10">
+      <div className="max-w-md w-full space-y-6 bg-zinc-950 p-8 rounded-[2.5rem] border border-zinc-900 shadow-2xl">
         <div className="text-center">
-          <h1 className="text-4xl font-black tracking-tighter uppercase italic text-white">
+          <h1 className="text-4xl font-black tracking-tighter uppercase italic">
             JOIN <span className="text-amber-500">WEBRYA.</span>
           </h1>
           <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em] mt-2">
@@ -34,54 +35,27 @@ export default function RegisterPage() {
         <form action={handleSubmit} className="space-y-4">
           <div className="relative">
             <User className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" size={18} />
-            <input
-              name="displayName"
-              type="text"
-              placeholder="ΟΝΟΜΑΤΕΠΩΝΥΜΟ"
-              required
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-black focus:border-amber-500 outline-none transition-all uppercase tracking-widest"
-            />
+            <input name="displayName" type="text" placeholder="ΟΝΟΜΑΤΕΠΩΝΥΜΟ" required className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-black focus:border-amber-500 outline-none transition-all uppercase tracking-widest" />
           </div>
 
           <div className="relative">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" size={18} />
-            <input
-              name="email"
-              type="email"
-              placeholder="EMAIL ADDRESS"
-              required
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-black focus:border-amber-500 outline-none transition-all uppercase tracking-widest"
-            />
+            <input name="email" type="email" placeholder="EMAIL ADDRESS" required className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-black focus:border-amber-500 outline-none transition-all uppercase tracking-widest" />
           </div>
 
           <div className="relative">
             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" size={18} />
-            <input
-              name="password"
-              type="password"
-              placeholder="PASSWORD"
-              required
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-black focus:border-amber-500 outline-none transition-all uppercase tracking-widest"
-            />
+            <input name="password" type="password" placeholder="PASSWORD" required className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-black focus:border-amber-500 outline-none transition-all uppercase tracking-widest" />
           </div>
 
           {error && (
             <div className="flex items-center gap-2 text-red-500 bg-red-500/10 p-4 rounded-xl text-[10px] font-black uppercase tracking-widest">
-              <AlertCircle size={16} />
-              {error}
+              <AlertCircle size={16} /> {error}
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-amber-500 text-black py-4 rounded-2xl font-black uppercase tracking-[0.2em] italic text-xs hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
-          >
-            {loading ? 'ΔΗΜΙΟΥΡΓΙΑ...' : (
-              <>
-                ΕΓΓΡΑΦΗ <ArrowRight size={16} />
-              </>
-            )}
+          <button type="submit" disabled={loading} className="w-full bg-amber-500 text-black py-4 rounded-2xl font-black uppercase tracking-[0.2em] italic text-xs hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2">
+            {loading ? 'ΔΗΜΙΟΥΡΓΙΑ...' : <>ΕΓΓΡΑΦΗ <ArrowRight size={16} /></>}
           </button>
         </form>
 

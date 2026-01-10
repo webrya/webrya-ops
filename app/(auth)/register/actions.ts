@@ -16,7 +16,7 @@ export async function signup(formData: FormData) {
     options: {
       data: {
         display_name: displayName,
-        language: 'GR', // Default γλώσσα
+        language: 'GR', // Προεπιλεγμένη γλώσσα για νέους χρήστες
       },
     },
   })
@@ -25,5 +25,6 @@ export async function signup(formData: FormData) {
     return { error: error.message }
   }
 
+  // Μετά την επιτυχή εγγραφή, ανακατεύθυνση στο κεντρικό Dashboard
   redirect('/dashboard')
 }
