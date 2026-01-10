@@ -1,0 +1,39 @@
+{
+  "sidebar": {
+    "dashboard": "DASHBOARD",
+    "properties": "PROPERTIES",
+    "bookings": "BOOKINGS",
+    "tasks": "TASKS",
+    "settings": "SETTINGS",
+    "signout": "SIGN OUT"
+  },
+  "common": {
+    "user": "USER",
+    "new_button": "NEW",
+    "my_prefix": "MY",
+    "my_suffix": "",
+    "save": "SAVE CHANGES",
+    "pending": "PENDING",
+    "completed": "COMPLETED"
+  },
+  "dashboard": {
+    "overview": "OVERVIEW",
+    "tasks_pending": "PENDING TASKS",
+    "tasks_completed": "COMPLETED",
+    "bookings": "BOOKINGS",
+    "next_tasks": "NEXT TASKS"
+  },
+  "settings": {
+    "title": "SETTINGS",
+    "profile": "USER PROFILE",
+    "name_label": "FULL NAME",
+    "email_label": "EMAIL (READ ONLY)",
+    "language": "SYSTEM LANGUAGE",
+    "save": "SAVE CHANGES"
+  },
+  "bookings": {
+    "check_in": "CHECK IN",
+    "check_out": "CHECK OUT",
+    "guest": "GUEST"
+  }
+}

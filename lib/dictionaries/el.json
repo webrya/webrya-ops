@@ -1,0 +1,39 @@
+{
+  "sidebar": {
+    "dashboard": "ΠΙΝΑΚΑΣ ΕΛΕΓΧΟΥ",
+    "properties": "ΑΚΙΝΗΤΑ",
+    "bookings": "ΚΡΑΤΗΣΕΙΣ",
+    "tasks": "ΕΡΓΑΣΙΕΣ",
+    "settings": "ΡΥΘΜΙΣΕΙΣ",
+    "signout": "ΕΞΟΔΟΣ"
+  },
+  "common": {
+    "user": "ΧΡΗΣΤΗΣ",
+    "new_button": "ΝΕΑ",
+    "my_prefix": "ΟΙ",
+    "my_suffix": "ΜΟΥ",
+    "save": "ΑΠΟΘΗΚΕΥΣΗ",
+    "pending": "ΣΕ ΕΚΚΡΕΜΟΤΗΤΑ",
+    "completed": "ΟΛΟΚΛΗΡΩΜΕΝΗ"
+  },
+  "dashboard": {
+    "overview": "ΕΠΙΣΚΟΠΗΣΗ",
+    "tasks_pending": "ΕΚΚΡΕΜΕΙΣ ΕΡΓΑΣΙΕΣ",
+    "tasks_completed": "ΟΛΟΚΛΗΡΩΜΕΝΕΣ",
+    "bookings": "ΚΡΑΤΗΣΕΙΣ",
+    "next_tasks": "ΕΠΟΜΕΝΕΣ ΕΡΓΑΣΙΕΣ"
+  },
+  "settings": {
+    "title": "ΡΥΘΜΙΣΕΙΣ",
+    "profile": "ΠΡΟΦΙΛ ΧΡΗΣΤΗ",
+    "name_label": "ΟΝΟΜΑΤΕΠΩΝΥΜΟ",
+    "email_label": "EMAIL (ΜΟΝΟ ΑΝΑΓΝΩΣΗ)",
+    "language": "ΓΛΩΣΣΑ ΣΥΣΤΗΜΑΤΟΣ",
+    "save": "ΑΠΟΘΗΚΕΥΣΗ"
+  },
+  "bookings": {
+    "check_in": "ΑΦΙΞΗ",
+    "check_out": "ΑΝΑΧΩΡΗΣΗ",
+    "guest": "ΕΠΙΣΚΕΠΤΗΣ"
+  }
+}
