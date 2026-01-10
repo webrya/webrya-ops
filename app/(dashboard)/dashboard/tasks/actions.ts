@@ -61,3 +61,36 @@ export async function syncPropertyAction(formData: FormData) {
   revalidatePath('/dashboard/tasks')
   redirect('/dashboard/tasks')
 }
+// Προσθήκη στο τέλος του actions.ts
+export async function createTask(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) throw new Error('Μη εξουσιοδοτημένη πρόσβαση')
+
+  const title = formData.get('title') as string
+  const propertyId = formData.get('propertyId') as string
+  const dueDate = formData.get('dueDate') as string
+  const description = formData.get('description') as string
+
+  const { error } = await supabase
+    .from('tasks')
+    .insert([
+      { 
+        title, 
+        property_id: propertyId, 
+        user_id: user.id,
+        due_date: new Date(dueDate).toISOString(),
+        description,
+        status: 'pending' 
+      }
+    ])
+
+  if (error) {
+    console.error('Task Error:', error.message)
+    throw new Error('Αποτυχία δημιουργίας εργασίας')
+  }
+
+  revalidatePath('/dashboard/tasks')
+  return { success: true }
+}
