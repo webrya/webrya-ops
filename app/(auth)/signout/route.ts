@@ -1,21 +1,28 @@
 import { createClient } from '@/lib/supabase/server'
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 
-export async function POST(req: Request) {
+export async function POST() {
   const supabase = await createClient()
 
-  // 1. Έλεγχος αν υπάρχει χρήστης
-  const { data: { user } } = await supabase.auth.getUser()
+  // 1. Kill Supabase session
+  await supabase.auth.signOut()
 
-  if (user) {
-    await supabase.auth.signOut()
-  }
+  // 2. HARD cache invalidation (layouts + pages)
+  revalidatePath('/', 'layout')
+  revalidatePath('/dashboard', 'layout')
+  revalidatePath('/dashboard', 'page')
+  revalidatePath('/dashboard/(.*)', 'page')
 
-  // 2. ΤΟ ΠΙΟ ΣΗΜΑΝΤΙΚΟ: Καθαρίζουμε ΟΛΗ τη μνήμη cache του dashboard
-  revalidatePath('/', 'layout') 
-  
-  // 3. Αναγκαστική ανακατεύθυνση στο login
-  return redirect('/login')
+  // 3. Redirect with no-store headers
+  return NextResponse.redirect(
+    new URL('/login', process.env.NEXT_PUBLIC_SITE_URL),
+    {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
+    }
+  )
 }
