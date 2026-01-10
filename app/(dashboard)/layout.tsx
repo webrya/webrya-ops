@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { LayoutDashboard, Home, Calendar, CheckCircle2, Settings, LogOut } from 'lucide-react'
-import { getDictionary } from '@/lib/get-dictionary' // Βεβαιώσου ότι έχεις φτιάξει αυτό το αρχείο
+import { getDictionary } from '@/lib/get-dictionary'
+import { MobileNav } from '@/components/mobile-nav'
 
 export default async function DashboardLayout({
   children,
@@ -13,16 +14,13 @@ export default async function DashboardLayout({
 
   if (!user) redirect('/login')
 
-  // Τραβάμε display_name και language (EN ή GR) από τα metadata
   const userDisplayName = user.user_metadata?.display_name || user.email?.split('@')[0]
   const userLanguage = (user.user_metadata?.language as 'GR' | 'EN') || 'GR'
-
-  // Φορτώνουμε το λεξικό βάσει της γλώσσας του χρήστη
   const dict = await getDictionary(userLanguage)
 
   return (
     <div className="flex min-h-screen bg-black text-white flex-col md:flex-row font-sans">
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar (Hidden on Mobile) */}
       <aside className="w-64 bg-zinc-950 border-r border-zinc-800 hidden md:flex flex-col sticky top-0 h-screen">
         <div className="p-6 font-black text-2xl tracking-tighter border-b border-zinc-800 uppercase italic">
           <span className="text-white">Webrya</span> <span className="text-amber-500">Ops</span>
@@ -47,7 +45,6 @@ export default async function DashboardLayout({
           </a>
         </nav>
 
-        {/* ΚΑΤΩ ΜΕΡΟΣ: ΡΥΘΜΙΣΕΙΣ & ΧΡΗΣΤΗΣ */}
         <div className="p-4 border-t border-zinc-800 space-y-2 bg-black">
           <div className="flex items-center justify-between px-3 py-2 mb-2 bg-zinc-900/30 rounded-2xl border border-zinc-800/50">
              <div className="flex flex-col min-w-0">
@@ -56,7 +53,6 @@ export default async function DashboardLayout({
                    {userDisplayName}
                 </span>
              </div>
-             {/* Εμφάνιση Σημαίας/Κειμένου ανάλογα με τη γλώσσα */}
              <span className="text-lg">{userLanguage === 'EN' ? 'EN' : 'GR'}</span>
           </div>
 
@@ -76,10 +72,13 @@ export default async function DashboardLayout({
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <main className="p-6 md:p-10 pb-32 md:pb-10">
+        <main className="p-6 md:p-10 pb-32 md:pb-10"> {/* pb-32: Padding bottom for Mobile Nav space */}
           {children}
         </main>
       </div>
+
+      {/* Mobile Navigation (Visible only on Mobile) */}
+      <MobileNav />
     </div>
   )
 }
