@@ -4,18 +4,26 @@ import { LayoutDashboard, Home, Calendar, CheckCircle2, Settings, LogOut } from 
 import { getDictionary } from '@/lib/get-dictionary'
 import { MobileNav } from '@/components/mobile-nav'
 
+// 1. ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ CACHING - Λύνει το πρόβλημα με τα δεδομένα άλλων χρηστών
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const supabase = await createClient()
+  
+  // Έλεγχος χρήστη σε κάθε αίτημα (request)
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) redirect('/login')
 
   const userDisplayName = user.user_metadata?.display_name || user.email?.split('@')[0]
   const userLanguage = (user.user_metadata?.language as 'GR' | 'EN') || 'GR'
+  
+  // Φόρτωση σωστού λεξικού βάσει της γλώσσας του χρήστη
   const dict = await getDictionary(userLanguage)
 
   return (
@@ -53,7 +61,9 @@ export default async function DashboardLayout({
                    {userDisplayName}
                 </span>
              </div>
-             <span className="text-lg">{userLanguage === 'EN' ? 'EN' : 'GR'}</span>
+             <span className="text-lg font-black text-amber-500 italic">
+               {userLanguage === 'EN' ? 'EN' : 'GR'}
+             </span>
           </div>
 
           <a href="/dashboard/settings" className="flex items-center gap-3 p-3 text-zinc-400 hover:text-amber-500 hover:bg-zinc-900 rounded-xl transition-all font-black uppercase text-xs tracking-widest italic">
@@ -61,7 +71,8 @@ export default async function DashboardLayout({
             {dict.sidebar.settings}
           </a>
           
-          <form action="/signout" method="post">
+          {/* 2. ΔΙΟΡΘΩΣΗ LOGOUT - Πρέπει να οδηγεί στο /auth/signout route που φτιάξαμε */}
+          <form action="/auth/signout" method="post">
             <button type="submit" className="w-full flex items-center gap-3 p-3 text-red-600 hover:bg-red-500/10 rounded-xl transition-all text-xs font-black uppercase tracking-widest italic text-left">
               <LogOut size={18} /> 
               {dict.sidebar.signout}
@@ -72,13 +83,13 @@ export default async function DashboardLayout({
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <main className="p-6 md:p-10 pb-32 md:pb-10"> {/* pb-32: Padding bottom for Mobile Nav space */}
+        <main className="p-6 md:p-10 pb-32 md:pb-10"> 
           {children}
         </main>
       </div>
 
-      {/* Mobile Navigation (Visible only on Mobile) */}
-      <MobileNav />
+      {/* 3. ΔΙΟΡΘΩΣΗ MOBILE NAV - Πέρασμα του λεξικού για μεταφράσεις */}
+      <MobileNav dict={dict} />
     </div>
   )
 }
